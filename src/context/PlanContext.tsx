@@ -1,4 +1,4 @@
-/*"use client";
+"use client";
 
 import {
   createContext,
@@ -16,12 +16,15 @@ export interface PlanItem {
   done: boolean;
 }
 
+const PLAN_CAP = 5;
+
 interface PlanContextValue {
   planItems: PlanItem[];
   savedWorkouts: Workout[];
 
   isInPlan: (id: number) => boolean;
   isSaved: (id: number) => boolean;
+  isPlanFull: () => boolean;
 
   addToPlan: (workout: Workout) => void;
   removeFromPlan: (id: number) => void;
@@ -102,7 +105,7 @@ export function PlanProvider({
   const [savedWorkouts, setSavedWorkouts] =
     useState<Workout[]>(loadSavedWorkouts);
 
- 
+  
   useEffect(() => {
     try {
       localStorage.setItem(
@@ -114,7 +117,7 @@ export function PlanProvider({
     }
   }, [planItems]);
 
-
+  
   useEffect(() => {
     try {
       localStorage.setItem(
@@ -140,25 +143,33 @@ export function PlanProvider({
     );
   };
 
+ 
+  const isPlanFull = () => planItems.length >= PLAN_CAP;
 
   const addToPlan = (workout: Workout) => {
-    setPlanItems((previous) => {
-      const alreadyInPlan = previous.some(
-        (item) => item.workout.id === workout.id
+    const alreadyInPlan = planItems.some(
+      (item) => item.workout.id === workout.id
+    );
+
+    if (alreadyInPlan) {
+      return;
+    }
+
+    if (isPlanFull()) {
+      showToast(
+        "Today's plan is full (5 lifts max)",
+        "error"
       );
+      return;
+    }
 
-      if (alreadyInPlan) {
-        return previous;
-      }
-
-      return [
-        ...previous,
-        {
-          workout,
-          done: false,
-        },
-      ];
-    });
+    setPlanItems((previous) => [
+      ...previous,
+      {
+        workout,
+        done: false,
+      },
+    ]);
 
     showToast(
       `${workout.name} added to plan`,
@@ -186,7 +197,7 @@ export function PlanProvider({
     }
   };
 
- 
+  
   const toggleDone = (id: number) => {
     const item = planItems.find(
       (entry) => entry.workout.id === id
@@ -217,7 +228,7 @@ export function PlanProvider({
     );
   };
 
- 
+  
   const toggleSaved = (workout: Workout) => {
     setSavedWorkouts((previous) => {
       const alreadySaved = previous.some(
@@ -244,7 +255,7 @@ export function PlanProvider({
     });
   };
 
-
+  
   return (
     <PlanContext.Provider
       value={{
@@ -252,6 +263,7 @@ export function PlanProvider({
         savedWorkouts,
         isInPlan,
         isSaved,
+        isPlanFull,
         addToPlan,
         removeFromPlan,
         toggleDone,
@@ -274,4 +286,4 @@ export function usePlan() {
   }
 
   return context;
-}*/
+}

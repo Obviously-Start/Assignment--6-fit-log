@@ -1,13 +1,13 @@
-/*"use client";
+"use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Check,
   CheckCircle2,
-  Circle,
   Clock3,
   Flame,
+  LoaderCircle,
   Star,
   Trash2,
 } from "lucide-react";
@@ -21,6 +21,12 @@ type SortOption = "duration" | "calories" | "rating";
 export default function MyPlanPage() {
   const [tab, setTab] = useState<Tab>("plan");
   const [sortBy, setSortBy] = useState<SortOption>("duration");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const {
     planItems,
@@ -30,6 +36,7 @@ export default function MyPlanPage() {
     toggleSaved,
     addToPlan,
     isInPlan,
+    isPlanFull,
   } = usePlan();
 
  
@@ -44,7 +51,7 @@ export default function MyPlanPage() {
     0
   );
 
-
+  
 
   const sortedPlanItems = useMemo(() => {
     const items = [...planItems];
@@ -90,7 +97,7 @@ export default function MyPlanPage() {
 
       <main className="min-h-screen bg-[#111316]">
         <div className="container-fitlog py-12 sm:py-14">
-        
+          
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#ccff00]">
               FITLOG
@@ -107,7 +114,7 @@ export default function MyPlanPage() {
 
           
           <div className="mt-8 grid overflow-hidden rounded-[10px] border border-[#292d33] bg-[#15171b] md:grid-cols-3">
-           
+            
             <div className="border-b border-[#24272d] px-5 py-5 md:border-b-0 md:border-r">
               <p className="text-[9px] font-medium text-[#777b83]">
                 Exercises
@@ -118,7 +125,7 @@ export default function MyPlanPage() {
               </p>
             </div>
 
-            
+           
             <div className="border-b border-[#24272d] px-5 py-5 md:border-b-0 md:border-r">
               <p className="text-[9px] font-medium text-[#777b83]">
                 Minutes
@@ -141,9 +148,9 @@ export default function MyPlanPage() {
             </div>
           </div>
 
-        
+          
           <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-           
+            
             <div className="flex w-fit rounded-[8px] border border-[#292d33] bg-[#15171b] p-0.5">
               <button
                 type="button"
@@ -170,7 +177,7 @@ export default function MyPlanPage() {
               </button>
             </div>
 
-         
+        
             <div className="flex items-center gap-2">
               <label
                 htmlFor="sort-workouts"
@@ -194,8 +201,24 @@ export default function MyPlanPage() {
             </div>
           </div>
 
-          
-          {tab === "plan" && (
+         
+          {loading && (
+            <div className="mt-5 flex min-h-[220px] items-center justify-center">
+              <div className="flex items-center gap-3 text-[#777b83]">
+                <LoaderCircle
+                  size={20}
+                  className="animate-spin text-[#ccff00]"
+                />
+
+                <span className="text-[11px] font-semibold uppercase tracking-[0.15em]">
+                  Loading workouts...
+                </span>
+              </div>
+            </div>
+          )}
+
+         
+          {!loading && tab === "plan" && (
             <div className="mt-5">
               {sortedPlanItems.length === 0 ? (
                 <EmptyState />
@@ -206,7 +229,7 @@ export default function MyPlanPage() {
                       key={workout.id}
                       className="flex items-center gap-3 rounded-[9px] border border-[#292d33] bg-[#15171b] p-3 transition-colors hover:border-[#383d45] sm:gap-4 sm:p-4"
                     >
-                     
+                      
                       <Link
                         href={`/workout/${workout.id}`}
                         className="h-14 w-20 shrink-0 overflow-hidden rounded-[6px] bg-[#1b1e23] sm:h-16 sm:w-24"
@@ -218,7 +241,7 @@ export default function MyPlanPage() {
                         />
                       </Link>
 
-                    
+                     
                       <div className="min-w-0 flex-1">
                         <Link href={`/workout/${workout.id}`}>
                           <h3 className="font-display truncate text-base font-bold uppercase text-white transition hover:text-[#ccff00] sm:text-lg">
@@ -231,7 +254,7 @@ export default function MyPlanPage() {
                         </p>
 
                         <div className="mt-1.5 flex flex-wrap items-center gap-3 text-[9px] text-[#777b83]">
-                          
+                        
                           <span className="flex items-center gap-1">
                             <Clock3
                               size={10}
@@ -240,7 +263,7 @@ export default function MyPlanPage() {
                             {workout.duration} min
                           </span>
 
-                     
+                          
                           <span className="flex items-center gap-1">
                             <Flame
                               size={10}
@@ -260,9 +283,9 @@ export default function MyPlanPage() {
                         </div>
                       </div>
 
-               
+                   
                       <div className="flex shrink-0 items-center gap-2">
-                        
+                   
                         <Link
                           href={`/workout/${workout.id}`}
                           className="hidden rounded-full border border-[#343940] px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.04em] text-[#d7d9dc] transition hover:border-[#ccff00] hover:text-[#ccff00] sm:inline-flex"
@@ -291,7 +314,7 @@ export default function MyPlanPage() {
                           </span>
                         </button>
 
-                     
+                      
                         <button
                           type="button"
                           onClick={() => removeFromPlan(workout.id)}
@@ -308,8 +331,8 @@ export default function MyPlanPage() {
             </div>
           )}
 
-         
-          {tab === "saved" && (
+          
+          {!loading && tab === "saved" && (
             <div className="mt-5">
               {sortedSavedWorkouts.length === 0 ? (
                 <EmptyState label="Nothing saved yet" />
@@ -320,7 +343,7 @@ export default function MyPlanPage() {
                       key={workout.id}
                       className="flex items-center gap-3 rounded-[9px] border border-[#292d33] bg-[#15171b] p-3 transition-colors hover:border-[#383d45] sm:gap-4 sm:p-4"
                     >
-                      
+                     
                       <Link
                         href={`/workout/${workout.id}`}
                         className="h-14 w-20 shrink-0 overflow-hidden rounded-[6px] bg-[#1b1e23] sm:h-16 sm:w-24"
@@ -332,7 +355,7 @@ export default function MyPlanPage() {
                         />
                       </Link>
 
-                      
+                   
                       <div className="min-w-0 flex-1">
                         <Link href={`/workout/${workout.id}`}>
                           <h3 className="font-display truncate text-base font-bold uppercase text-white transition hover:text-[#ccff00] sm:text-lg">
@@ -373,7 +396,7 @@ export default function MyPlanPage() {
 
                       
                       <div className="flex shrink-0 items-center gap-2">
-                        
+                      
                         <Link
                           href={`/workout/${workout.id}`}
                           className="hidden rounded-full border border-[#343940] px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.04em] text-[#d7d9dc] transition hover:border-[#ccff00] hover:text-[#ccff00] sm:inline-flex"
@@ -381,22 +404,25 @@ export default function MyPlanPage() {
                           View Details
                         </Link>
 
-                     
+                        
                         <button
                           type="button"
                           onClick={() => addToPlan(workout)}
-                          disabled={isInPlan(workout.id)}
+                          disabled={isInPlan(workout.id) || isPlanFull()}
                           className={`rounded-full px-3.5 py-2 text-[9px] font-bold uppercase tracking-[0.03em] transition ${
-                            isInPlan(workout.id)
+                            isInPlan(workout.id) || isPlanFull()
                               ? "cursor-default bg-[#24272d] text-[#55585e]"
                               : "bg-[#ccff00] text-[#111111] hover:bg-[#a8d600]"
                           }`}
                         >
                           {isInPlan(workout.id)
                             ? "In Plan"
-                            : "Add to Plan"}
+                            : isPlanFull()
+                              ? "Plan Full"
+                              : "Add to Plan"}
                         </button>
 
+                        
                         <button
                           type="button"
                           onClick={() => toggleSaved(workout)}
@@ -443,4 +469,4 @@ function EmptyState({
       </Link>
     </div>
   );
-}*/
+}

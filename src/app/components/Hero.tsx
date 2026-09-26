@@ -1,4 +1,5 @@
-/*import Link from "next/link";
+import Link from "next/link";
+import { Dumbbell } from "lucide-react";
 import banner from "../images/banner.png";
 
 export default function Hero() {
@@ -7,7 +8,7 @@ export default function Hero() {
       <div className="mx-auto w-full max-w-[1250px] px-2 sm:px-6 lg:px-8">
 <div className="rounded-2xl bg-[#1e1e25] px-6 py-5 sm:px-8 sm:py-6 lg:px-10 lg:py-8">
           <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            {/* Content }
+         
             <div className="max-w-xl">
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-[#c6ff00]">
                 Workout Library
@@ -26,13 +27,14 @@ export default function Hero() {
 
   <Link
   href="/#library"
-  className="fitlog-button mt-10 inline-flex items-center justify-center rounded-lg px-7 py-3.5 text-[11px] font-extrabold uppercase tracking-[0.12em] shadow-[0_6px_20px_rgba(198,255,0,0.12)] transition-all duration-200 hover:-translate-y-0.5"
+  className="fitlog-button mt-10 inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3.5 text-[11px] font-extrabold uppercase tracking-[0.12em] shadow-[0_6px_20px_rgba(198,255,0,0.12)] transition-all duration-200 hover:-translate-y-0.5"
 >
+  <Dumbbell size={14} />
   Browse Workouts
 </Link>
             </div>
 
-            {/* Image }
+         
             <div className="flex justify-center lg:justify-end">
               <img
                 src={banner.src}
@@ -45,4 +47,4 @@ export default function Hero() {
       </div>
     </section>
   );
-}*/
+}

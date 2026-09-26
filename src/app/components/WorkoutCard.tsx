@@ -1,4 +1,4 @@
-/*import Link from "next/link";
+import Link from "next/link";
 import { Clock3, Flame, Star } from "lucide-react";
 
 import type { Workout } from "../types/workout";
@@ -15,7 +15,7 @@ export default function WorkoutCard({
       href={`/workout/${workout.id}`}
       className="group block overflow-hidden border border-[#24272d] bg-[#1b1b1b] transition hover:-translate-y-1 hover:border-[#ccff00]/50"
     >
-      {/* Image }
+      
       <div className="h-52 overflow-hidden bg-[#15171b]">
         <img
           src={workout.image}
@@ -24,9 +24,9 @@ export default function WorkoutCard({
         />
       </div>
 
-      {/* Content }
+      
       <div className="p-5">
-        {/* Muscle Groups }
+        
         <div className="flex flex-wrap gap-2">
           {workout.muscleGroups.map((muscle) => (
             <span
@@ -38,12 +38,12 @@ export default function WorkoutCard({
           ))}
         </div>
 
-        {/* Name }
+        
         <h3 className="font-display mt-4 text-2xl font-bold uppercase leading-tight text-white">
           {workout.name}
         </h3>
 
-        {/* Equipment }
+        
         <p className="mt-2 text-xs text-[#85878d]">
           {workout.equipment}
         </p>
@@ -98,4 +98,4 @@ export default function WorkoutCard({
       </div>
     </Link>
   );
-}*/
+}

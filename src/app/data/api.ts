@@ -1,4 +1,4 @@
-/*import type { Workout } from "../types/workout";
+import type { Workout } from "../types/workout";
 
 const API_URL = "https://api.abcz.workers.dev/api/fitlog";
 
@@ -23,4 +23,3 @@ export async function getWorkoutById(
 
   return workouts.find((workout) => workout.id === id);
 }
-*/

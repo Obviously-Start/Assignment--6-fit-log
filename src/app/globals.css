@@ -34,9 +34,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* =========================
-   Buttons & Links
-========================= */
+
 
 button,
 a {
@@ -47,9 +45,7 @@ button {
   font: inherit;
 }
 
-/* =========================
-   Scrollbar
-========================= */
+
 
 ::-webkit-scrollbar {
   width: 7px;
@@ -68,18 +64,14 @@ button {
   background: #464a50;
 }
 
-/* =========================
-   Selection
-========================= */
+
 
 ::selection {
   background: var(--accent);
   color: #111111;
 }
 
-/* =========================
-   Main Container
-========================= */
+
 
 .container-fitlog {
   width: min(calc(100% - 44px), 1200px);
@@ -87,27 +79,20 @@ button {
   margin-right: auto;
 }
 
-/* =========================
-   Section Spacing
-========================= */
+
 
 .section-padding {
   padding-top: 64px;
   padding-bottom: 64px;
 }
 
-/* =========================
-   FitLog Card
-========================= */
+
 
 .fitlog-card {
   background: var(--surface);
   border: 1px solid var(--border);
 }
 
-/* =========================
-   Text
-========================= */
 
 .fitlog-muted {
   color: var(--muted);
@@ -117,9 +102,7 @@ button {
   color: var(--accent);
 }
 
-/* =========================
-   Main Button
-========================= */
+
 
 .fitlog-button {
   display: inline-flex;
@@ -144,9 +127,7 @@ button {
   transform: translateY(1px);
 }
 
-/* =========================
-   Display Font
-========================= */
+
 
 .font-display {
   font-family: var(--font-oswald), Impact, sans-serif;

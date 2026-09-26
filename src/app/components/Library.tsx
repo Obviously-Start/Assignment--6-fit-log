@@ -1,4 +1,4 @@
-/*"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { LoaderCircle } from "lucide-react";
@@ -38,7 +38,7 @@ export default function Library() {
  className="bg-[#0a0a0b] px-4 pt-12 pb-16 sm:pt-16 sm:pb-20"
 >
       <div className="container-fitlog">
-        {/* Section Header }
+        
         <div className="mb-9">
           <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#b7d900]">
             WORKOUTS
@@ -53,7 +53,7 @@ export default function Library() {
           </p>
         </div>
 
-        {/* Loading State }
+       
         {loading && (
           <div className="flex min-h-[300px] items-center justify-center">
             <div className="flex items-center gap-3 text-[#85878d]">
@@ -69,14 +69,14 @@ export default function Library() {
           </div>
         )}
 
-        {/* Error State }
+        
         {!loading && error && (
           <div className="border border-red-500/30 bg-red-500/5 px-5 py-6 text-sm text-red-400">
             {error}
           </div>
         )}
 
-        {/* Workout Grid }
+        
         {!loading && !error && workouts.length > 0 && (
          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {workouts.map((workout) => (
@@ -88,7 +88,7 @@ export default function Library() {
           </div>
         )}
 
-        {/* Empty State }
+       
         {!loading && !error && workouts.length === 0 && (
           <div className="flex min-h-[300px] items-center justify-center border border-[#292c32] bg-[#17181c]">
             <p className="text-sm text-[#85878d]">
@@ -99,4 +99,4 @@ export default function Library() {
       </div>
     </section>
   );
-}*/
+}
